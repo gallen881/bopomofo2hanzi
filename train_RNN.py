@@ -41,5 +41,5 @@ if __name__ == '__main__':
         optimizer="rmsprop",
         loss="sparse_categorical_crossentropy",
         metrics=["accuracy"])
-    seq2seq_rnn.fit(train_dataset, epochs=30, validation_data=val_dataset, callbacks=[tf.keras.callbacks.ModelCheckpoint(f'models/{model_name}', save_best_only=True), tf.keras.callbacks.TensorBoard(log_dir='logs')])
+    seq2seq_rnn.fit(train_dataset, epochs=20, validation_data=val_dataset, callbacks=[tf.keras.callbacks.ModelCheckpoint(f'models/{model_name}', save_best_only=True), tf.keras.callbacks.TensorBoard(log_dir='logs')])
     seq2seq_rnn.evaluate(test_dataset)

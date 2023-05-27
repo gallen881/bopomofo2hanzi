@@ -42,5 +42,5 @@ if __name__ == '__main__':
     transformer = tf.keras.Model([encoder_inputs, decoder_inputs], decoder_outputs)
 
     transformer.compile(optimizer="rmsprop", loss="sparse_categorical_crossentropy", metrics=["accuracy"])
-    transformer.fit(train_dataset, epochs=3, validation_data=val_dataset, callbacks=[tf.keras.callbacks.ModelCheckpoint(f'models/{model_name}', save_best_only=True), tf.keras.callbacks.TensorBoard(log_dir='logs')])
+    transformer.fit(train_dataset, epochs=20, validation_data=val_dataset, callbacks=[tf.keras.callbacks.ModelCheckpoint(f'models/{model_name}', save_best_only=True), tf.keras.callbacks.TensorBoard(log_dir='logs')])
     transformer.evaluate(test_dataset)
