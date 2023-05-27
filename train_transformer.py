@@ -6,8 +6,8 @@ import json
 model_name = 'EngTyping2Zh_Transformer_PTTTraining.keras'
 config = json.load(open('config.json', encoding='utf-8'))
 split_char = config['split_char']
-VOCABULARY_SIZE = config[model_name]['vocabulary_size']
-SEQUENCE_LENGTH = config[model_name]['sequence_length']
+VOCABULARY_SIZE = config['models'][model_name]['vocabulary_size']
+SEQUENCE_LENGTH = config['models'][model_name]['sequence_length']
 
 from custom import TransformerEncoder, TransformerDecoder, PositionalEmbedding
 
