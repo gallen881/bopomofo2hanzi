@@ -15,7 +15,7 @@ if __name__ == '__main__':
     engTyping_inserted_lines = [engTyping_insert_split_char(bopomofo2engTyping(''.join(zh2bopomofo(line))), split_char) for line in lines]
     zh_lines = ['[start]' + split_char + zh_insert_split_char(del_punctuations(line), split_char) + split_char + '[end]' for line in lines]
     text_pairs = list(zip(engTyping_inserted_lines, zh_lines))
-    train_pairs, val_pairs, test_pairs = get_data_pairs(text_pairs)
+    train_pairs, val_pairs, test_pairs = get_data_pairs(text_pairs, shuffle=False)
     print('Data preprocessed.')
     print(train_pairs)
     tv_save_names = [f"models/{model_name[:-6]}_source_vectorization.pkl", f"models/{model_name[:-6]}_target_vectorization.pkl"]
