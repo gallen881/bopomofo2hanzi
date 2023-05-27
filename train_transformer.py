@@ -42,28 +42,5 @@ if __name__ == '__main__':
     transformer = tf.keras.Model([encoder_inputs, decoder_inputs], decoder_outputs)
 
     transformer.compile(optimizer="rmsprop", loss="sparse_categorical_crossentropy", metrics=["accuracy"])
-    transformer.fit(train_dataset, epochs=30, validation_data=val_dataset, callbacks=[tf.keras.callbacks.ModelCheckpoint(f'models/{model_name}', save_best_only=True), tf.keras.callbacks.TensorBoard(log_dir='logs')])
-
-    import numpy as np
-    zh_vocab = target_vectorization.get_vocabulary()
-    zh_index_lookup = dict(zip(range(len(zh_vocab)), zh_vocab))
-    max_decoded_sentence_length = 20
-    # transformer = tf.keras.models.load_model(f'models/{model_name}', custom_objects={"TransformerEncoder": TransformerEncoder, 'TransformerDecoder': TransformerDecoder, 'PositionalEmbedding': PositionalEmbedding})
-
-    def decode_sequence(input_sentence):
-        tokenized_input_sentence = source_vectorization(engTyping_insert_split_char(input_sentence, split_char))
-        decoded_sentence = "[start]"
-        for i in range(max_decoded_sentence_length):
-            tokenized_target_sentence = target_vectorization(
-                [decoded_sentence])[:, :-1]
-            predictions = transformer(
-                [tokenized_input_sentence, tokenized_target_sentence])
-            sampled_token_index = np.argmax(predictions[0, i, :])
-            sampled_token = zh_index_lookup[sampled_token_index]
-            decoded_sentence += split_char + sampled_token
-            if sampled_token == "[end]":
-                break
-        return decoded_sentence
-
-    while True:
-        print(decode_sequence(input('?:')))
+    transformer.fit(train_dataset, epochs=3, validation_data=val_dataset, callbacks=[tf.keras.callbacks.ModelCheckpoint(f'models/{model_name}', save_best_only=True), tf.keras.callbacks.TensorBoard(log_dir='logs')])
+    transformer.evaluate(test_dataset)
