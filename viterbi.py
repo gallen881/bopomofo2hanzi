@@ -1,6 +1,6 @@
 # states = ('你', '好', '啊')
  
-observations = []
+# observations = []
  
 #start_probability = {'你': 0.6, '好': 0.3, '啊': 0.1}
  
@@ -15,7 +15,14 @@ observations = []
  #  '好': {'cl3': 0.6, 'cl4': 0.4},
  #  '啊': {'87': 1},
  #  }
-from train_viterbi import start_probability, transition_probability, emission_probability, states
+from utils import engTyping_end_fix, engTyping_rearrange
+import json
+with open('models/engTyping2Zh_HMM.json', encoding='utf-8') as file:
+    hmm = json.load(file)
+start_probability = hmm['start_probability']
+transition_probability = hmm['transition_probability']
+emission_probability = hmm['emission_probability']
+states = hmm['states']
 
 #states = [f'\{hex(i)[1:]}'.decode('utf-8') for i in range(12295, 200415)]
 
@@ -88,7 +95,8 @@ def example():
 
 while True:
     tmp = ''
-    for c in list(input('?:')):
+    observations = []
+    for c in list(engTyping_rearrange(engTyping_end_fix(input('?:')))):
         tmp += c
         if c in ' 6347':
             observations.append(tmp)
