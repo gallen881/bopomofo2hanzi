@@ -17,7 +17,6 @@ if __name__ == '__main__':
     text_pairs = list(zip(engTyping_inserted_lines, zh_lines))
     train_pairs, val_pairs, test_pairs = get_data_pairs(text_pairs, shuffle=False)
     print('Data preprocessed.')
-    print(train_pairs)
     tv_save_names = [f"models/{model_name[:-6]}_source_vectorization.pkl", f"models/{model_name[:-6]}_target_vectorization.pkl"]
     source_vectorization, target_vectorization = get_text_vectorization(train_pairs, VOCABULARY_SIZE, SEQUENCE_LENGTH, tv_save_names)
     train_dataset, val_dataset, test_dataset = get_datasets((source_vectorization, target_vectorization), train_pairs, val_pairs, test_pairs)
