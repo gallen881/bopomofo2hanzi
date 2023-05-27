@@ -23,6 +23,7 @@ states = []
 print('Calculating probability part 1...')
 for engt_line, zh_line in zip(engt, zh):
     # print(engt_line, zh_line)
+    if zh_line == []: continue
     start_probability[zh_line[0]] = start_probability.get(zh_line[0], 0) + 1
     tmp = ''
     for engt_char, zh_char in zip(engt_line, zh_line):
