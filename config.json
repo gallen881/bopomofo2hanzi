@@ -1,0 +1,17 @@
+{   
+    "bot": {
+        "token": "",
+        "playinggame": "Translating"
+    },
+    "models": {
+        "EngTyping2Zh_Transformer_PTTTraining.keras": {
+        "vocabulary_size": 15000,
+            "sequence_length": 20
+        },
+        "EngTyping2Zh_RNN_PTTTraining.keras": {
+            "vocabulary_size": 15000,
+            "sequence_length": 20
+        }
+    },
+    "split_char": "⫯"
+}
