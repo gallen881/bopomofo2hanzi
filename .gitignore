@@ -5,18 +5,16 @@ pinyin_fix.json
 processed.txt
 
 logs/
+.vscode
+build
+dist
 *.keras
 *.pkl
+*.spec
+*logs*
 
-test.py
-test2.py
-test3.py
-test4.py
-test5.py
-test6.py
-test7.py
-test8.py
-test9.py
+*test*
+
 
 train_RNN2.py
 train_transformer2.py
