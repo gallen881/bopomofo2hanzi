@@ -1,5 +1,7 @@
 from utils import *
 import json
+import time
+import statistics
 
 print('Loading data...')
 lines = get_data('PTT')
@@ -11,15 +13,18 @@ start_probability = {}
 transition_probability = {}
 emission_probability = {}
 engTyping2zh = {}
-
 print('Calculating probability part 1...')
+t = time.time()
 for engt_line, zh_line in zip(engt, zh):
     # print(engt_line, zh_line)
     if zh_line == []: continue
     start_probability[zh_line[0]] = start_probability.get(zh_line[0], 0) + 1
     tmp = ''
     for engt_char, zh_char in zip(engt_line, zh_line):
-        engTyping2zh[engt_char] = engTyping2zh.get(engt_char, []).append(zh_char)
+        if engt_char not in engTyping2zh.keys():
+            engTyping2zh[engt_char] = [zh_char]
+        elif zh_char not in engTyping2zh[engt_char]:
+            engTyping2zh[engt_char].append(zh_char)
         # print(tmp)
         if tmp != '':
             if tmp not in transition_probability.keys():
@@ -52,5 +57,10 @@ start_probability = sp_calculation(start_probability)
 transition_probability = tpep_calculation(transition_probability)
 emission_probability = tpep_calculation(emission_probability)
 
+start_probability['average'] = statistics.mean(start_probability.values())
+for key in transition_probability.keys():
+    transition_probability[key]['average'] = statistics.mean(transition_probability[key].values())
+
 print('Saving model...')
-json.dump({'start_probability': start_probability, 'transition_probability': transition_probability, 'emission_probability': emission_probability, 'engTyping2zh': engTyping2zh}, open('models/engTyping2Zh_HMM.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=4)
+print(f'Time used: {time.time() - t} seconds')
+json.dump({'start_probability': start_probability, 'transition_probability': transition_probability, 'emission_probability': emission_probability, 'engTyping2zh': engTyping2zh}, open('models/engTyping2Zh_HMM100.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=4)

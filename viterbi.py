@@ -2,12 +2,13 @@ import json
 import time
 from utils import engTyping_end_fix, engTyping_rearrange
 
-with open('models/engTyping2Zh_HMM.json', encoding='utf-8') as file:
+with open('models/engTyping2Zh_HMM70.json', encoding='utf-8') as file:
     hmm = json.load(file)
 start_probability = hmm['start_probability']
 transition_probability = hmm['transition_probability']
 emission_probability = hmm['emission_probability']
-states = hmm['states']
+
+default = 0.1e-100
 
 def viterbi(obs, states, start_p, trans_p, emit_p):
 
@@ -21,15 +22,13 @@ def viterbi(obs, states, start_p, trans_p, emit_p):
     assert emit_p[states[0]] == emission_probability[states[0]]
     print(obs[0], type(obs[0]))
 
-    minp_prob = 3.14e-200  # 防止數值下溢
-
     V = [{}]  # 存儲每個時間步的最大概率
     path = {}  # 存儲每個狀態的最佳路徑
 
     # 初始化
     for i, st in enumerate(states):
         print(f'count: {i}')
-        V[0][st] = start_p.get(st, minp_prob) * emit_p.get(st, {}).get(obs[0], minp_prob)  # 初始時間步的概率為起始概率乘以發射概率
+        V[0][st] = start_p.get(st, default) * emit_p.get(st, {}).get(obs[0], default)  # 初始時間步的概率為起始概率乘以發射概率
         path[st] = [st]  # 每個狀態作為自己的最佳路徑的起點
 
     # 執行 Viterbi 算法當 t > 0
@@ -43,7 +42,7 @@ def viterbi(obs, states, start_p, trans_p, emit_p):
             paths_to_curr_st = []
             for prev_st in states:
                 # 計算到達當前狀態的所有路徑的概率
-                paths_to_curr_st.append((V[t-1].get(prev_st, minp_prob) * trans_p.get(prev_st, {}).get(curr_st, minp_prob) * emit_p.get(curr_st, {}).get(obs[t], minp_prob), prev_st))
+                paths_to_curr_st.append((V[t-1].get(prev_st, default) * trans_p.get(prev_st, {}).get(curr_st, default) * emit_p.get(curr_st, {}).get(obs[t], default), prev_st))
             curr_prob, prev_state = max(paths_to_curr_st)  # 選擇概率最大的路徑
             V[t][curr_st] = curr_prob  # 更新當前時間步和當前狀態的最大概率
             newpath[curr_st] = path[prev_state] + [curr_st]  # 更新最佳路徑
@@ -76,7 +75,7 @@ def example():
                    emission_probability)
 
 while True:
-    t = time()
+    _t = time.time()
     tmp = ''
     observations = []
     for c in list(engTyping_rearrange(engTyping_end_fix(input('?:')))):
@@ -84,6 +83,15 @@ while True:
         if c in ' 6347':
             observations.append(tmp)
             tmp = ''
+    states = []
+    for observation in observations:
+        if observation not in hmm['engTyping2zh'].keys():
+            print(f'Unknown word: {observation}')
+            states = []
+            break
+        states.extend(hmm['engTyping2zh'][observation])
+    if states == []:
+        continue
     print(example())
     print(observations)
-    print(f'total time: {time() - t}')
+    print(f'total time: {time.time() - _t}')
