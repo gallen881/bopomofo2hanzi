@@ -1,11 +1,3 @@
-# with open('processed.txt', encoding='utf-8') as file:
-#     lines = file.read().split('\n')[:-1]
-# engt = []
-# zh = []
-# for line in lines:
-#     tmp, ttmp = line.split('\t')
-#     engt.append(tmp)
-#     zh.append(ttmp)
 from utils import *
 import json
 
@@ -18,7 +10,7 @@ zh = [[char for char in del_punctuations(line)] for line in lines]
 start_probability = {}
 transition_probability = {}
 emission_probability = {}
-states = []
+engTyping2zh = {}
 
 print('Calculating probability part 1...')
 for engt_line, zh_line in zip(engt, zh):
@@ -27,7 +19,7 @@ for engt_line, zh_line in zip(engt, zh):
     start_probability[zh_line[0]] = start_probability.get(zh_line[0], 0) + 1
     tmp = ''
     for engt_char, zh_char in zip(engt_line, zh_line):
-        states.append(zh_char) if zh_char not in states else ...
+        engTyping2zh[engt_char] = engTyping2zh.get(engt_char, []).append(zh_char)
         # print(tmp)
         if tmp != '':
             if tmp not in transition_probability.keys():
@@ -61,4 +53,4 @@ transition_probability = tpep_calculation(transition_probability)
 emission_probability = tpep_calculation(emission_probability)
 
 print('Saving model...')
-json.dump({'start_probability': start_probability, 'transition_probability': transition_probability, 'emission_probability': emission_probability, 'states': states}, open('models/engTyping2Zh_HMM.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=4)
+json.dump({'start_probability': start_probability, 'transition_probability': transition_probability, 'emission_probability': emission_probability, 'engTyping2zh': engTyping2zh}, open('models/engTyping2Zh_HMM.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=4)

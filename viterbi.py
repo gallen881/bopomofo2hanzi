@@ -1,31 +1,13 @@
-# states = ('你', '好', '啊')
- 
-# observations = []
- 
-#start_probability = {'你': 0.6, '好': 0.3, '啊': 0.1}
- 
-#transition_probability = {
-#   '你': {'好': 0.7, '啊': 0.2, '你': 0.1},
-#   '好': {'好': 0.3, '啊': 0.6, '你': 0.1},
-#   '啊': {'啊': 0.8, '好': 0.1, '你': 0.1}
-#   }
- 
-#emission_probability = {
-#   '你': {'su3': 1},
- #  '好': {'cl3': 0.6, 'cl4': 0.4},
- #  '啊': {'87': 1},
- #  }
-from utils import engTyping_end_fix, engTyping_rearrange
 import json
+import time
+from utils import engTyping_end_fix, engTyping_rearrange
+
 with open('models/engTyping2Zh_HMM.json', encoding='utf-8') as file:
     hmm = json.load(file)
 start_probability = hmm['start_probability']
 transition_probability = hmm['transition_probability']
 emission_probability = hmm['emission_probability']
 states = hmm['states']
-
-#states = [f'\{hex(i)[1:]}'.decode('utf-8') for i in range(12295, 200415)]
-
 
 def viterbi(obs, states, start_p, trans_p, emit_p):
 
@@ -94,6 +76,7 @@ def example():
                    emission_probability)
 
 while True:
+    t = time()
     tmp = ''
     observations = []
     for c in list(engTyping_rearrange(engTyping_end_fix(input('?:')))):
@@ -101,5 +84,6 @@ while True:
         if c in ' 6347':
             observations.append(tmp)
             tmp = ''
-    print(observations)
     print(example())
+    print(observations)
+    print(f'total time: {time() - t}')
