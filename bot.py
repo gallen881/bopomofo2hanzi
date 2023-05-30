@@ -3,7 +3,7 @@ import os
 import discord
 from discord.ext import commands
 import core.function as function
-from train_transformer import custom_standardization, custom_split
+from utils import custom_standardization, custom_split
 
 
 bot = commands.Bot(command_prefix='-', intents=discord.Intents.all())
@@ -42,7 +42,7 @@ async def main():
             if file.endswith('.py') and file != 'data.py':
                 await bot.load_extension(f'cmds.{file[:-3]}')
                 function.print_detail(memo='INFO', obj=f'{file} loaded successfully')
-        await bot.start(function.open_json('config.json')['token']['discord'])
+        await bot.start(function.open_json('config.json')['bot']['token'])
 
 
 asyncio.run(main())

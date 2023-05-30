@@ -1,7 +1,7 @@
-from utils import *
+from utils import get_data, bopomofo2engTyping, zh2bopomofo, del_punctuations
 import json
 import time
-import statistics
+
 
 print('Loading data...')
 lines = get_data('PTT')
@@ -57,9 +57,6 @@ start_probability = sp_calculation(start_probability)
 transition_probability = tpep_calculation(transition_probability)
 emission_probability = tpep_calculation(emission_probability)
 
-start_probability['average'] = statistics.mean(start_probability.values())
-for key in transition_probability.keys():
-    transition_probability[key]['average'] = statistics.mean(transition_probability[key].values())
 
 print('Saving model...')
 print(f'Time used: {time.time() - t} seconds')

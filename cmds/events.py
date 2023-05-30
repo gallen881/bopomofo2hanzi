@@ -3,16 +3,16 @@ import discord
 
 from core.classes import Cog_Extension
 import core.function as function
-import func
-import translator
+from utils import engTyping_end_fix, engTyping_rearrange, IsZhInputs
+import translator_viterbi
 
 class Events(Cog_Extension):
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
-        message.content = func.end_fix(message.content.lower())
-        if func.IsZhInputs(message.content):
+        message.content = engTyping_end_fix(engTyping_rearrange(message.content.lower()))
+        if IsZhInputs(message.content):
             function.print_detail('INFO', message.author, message.guild, message.channel, f'Get message: {message.content}')
-            translated_msg = translator.decode_sequence(message.content)
+            translated_msg = ''.join(translator_viterbi.decode_sentence(message.content)[1])
             await message.reply(translated_msg)
             function.print_detail('INFO', message.author, message.guild, message.channel, f'Send message: {translated_msg}')
 

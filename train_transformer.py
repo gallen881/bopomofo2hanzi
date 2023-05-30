@@ -30,11 +30,11 @@ if __name__ == '__main__':
     dense_dim = 2048
     num_heads = 8
 
-    encoder_inputs = tf.keras.Input(shape=(None,), dtype="int64", name="english")
+    encoder_inputs = tf.keras.Input(shape=(None,), dtype="int64", name="engTyping")
     x = PositionalEmbedding(SEQUENCE_LENGTH, VOCABULARY_SIZE, embed_dim)(encoder_inputs)
     encoder_outputs = TransformerEncoder(embed_dim, dense_dim, num_heads)(x)
 
-    decoder_inputs = tf.keras.Input(shape=(None,), dtype="int64", name="spanish")
+    decoder_inputs = tf.keras.Input(shape=(None,), dtype="int64", name="zh")
     x = PositionalEmbedding(SEQUENCE_LENGTH, VOCABULARY_SIZE, embed_dim)(decoder_inputs)
     x = TransformerDecoder(embed_dim, dense_dim, num_heads)(x, encoder_outputs)
     x = tf.keras.layers.Dropout(0.5)(x)

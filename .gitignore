@@ -1,10 +1,11 @@
 trash
 __pycache__
 phrases_dict.json
-pinyin_fix.json
 processed.txt
+example_sentence.txt
+config.json
 
-logs/
+*logs*
 .vscode
 build
 dist
@@ -12,14 +13,14 @@ dist
 *.pkl
 *.spec
 *logs*
-
+*.png
 *test*
 
 
 train_RNN2.py
 train_transformer2.py
-translator_RNN.py
-translator_transformer.py
+evaluate_viterbi.py
+plot_model.py
 
 data_process.py
 func.py

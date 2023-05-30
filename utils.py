@@ -3,7 +3,9 @@ import random
 import pickle
 import tensorflow as tf
 
-from pypinyin import lazy_pinyin, Style
+from pypinyin import lazy_pinyin, Style, load_phrases_dict
+load_phrases_dict(json.load(open('pinyin_fix.json', encoding='utf8')))
+
 
 def engTyping_insert_split_char(sentence: str, split_char: str) -> str:
     insert_times = 0
@@ -28,10 +30,13 @@ def bopomofo2engTyping(sentence: str) -> str:
         sen.append(table.get(char, ''))
     return ''.join(sen)
 
+def is_hanzi(char: str) -> bool:
+    return '\u4e00' <= char and char <= '\u9fa5'
+
 def del_punctuations(text: str) -> str:
     output = ''
     for char in text:
-        if '\u4e00' <= char <= '\u9fa5':
+        if is_hanzi(char):
             output += char
     return output
 
@@ -161,7 +166,7 @@ def get_datasets(tvs, train_pairs, val_pairs, test_pairs):
     def format_dataset(engTyping, zh):
         engTyping = source_vectorization(engTyping)
         zh = target_vectorization(zh)
-        return {'english': engTyping, 'spanish': zh[:, :-1]}, zh[:, 1:]
+        return {'engTyping': engTyping, 'zh': zh[:, :-1]}, zh[:, 1:]
 
     def make_dataset(pairs):
         engTyping_texts, zh_texts = zip(*pairs)

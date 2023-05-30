@@ -24,12 +24,11 @@ if __name__ == '__main__':
     embed_dim = 256
     latent_dim = 1024
 
-    source = tf.keras.Input(shape=(None,), dtype="int64", name="english")
+    source = tf.keras.Input(shape=(None,), dtype="int64", name="engTyping")
     x = tf.keras.layers.Embedding(VOCABULARY_SIZE, embed_dim, mask_zero=True)(source)
-    encoded_source = tf.keras.layers.Bidirectional(
-        tf.keras.layers.GRU(latent_dim), merge_mode="sum")(x)
+    encoded_source = tf.keras.layers.Bidirectional(tf.keras.layers.GRU(latent_dim), merge_mode="sum")(x)
 
-    past_target = tf.keras.Input(shape=(None,), dtype="int64", name="spanish")
+    past_target = tf.keras.Input(shape=(None,), dtype="int64", name="zh")
     x = tf.keras.layers.Embedding(VOCABULARY_SIZE, embed_dim, mask_zero=True)(past_target)
     decoder_gru = tf.keras.layers.GRU(latent_dim, return_sequences=True)
     x = decoder_gru(x, initial_state=encoded_source)
@@ -37,9 +36,6 @@ if __name__ == '__main__':
     target_next_step = tf.keras.layers.Dense(VOCABULARY_SIZE, activation="softmax")(x)
     seq2seq_rnn = tf.keras.Model([source, past_target], target_next_step)
 
-    seq2seq_rnn.compile(
-        optimizer="rmsprop",
-        loss="sparse_categorical_crossentropy",
-        metrics=["accuracy"])
+    seq2seq_rnn.compile(optimizer="rmsprop", loss="sparse_categorical_crossentropy", metrics=["accuracy"])
     seq2seq_rnn.fit(train_dataset, epochs=20, validation_data=val_dataset, callbacks=[tf.keras.callbacks.ModelCheckpoint(f'models/{model_name}', save_best_only=True), tf.keras.callbacks.TensorBoard(log_dir='logs')])
     seq2seq_rnn.evaluate(test_dataset)

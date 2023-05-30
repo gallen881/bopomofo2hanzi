@@ -1,0 +1,21 @@
+{   
+    "bot": {
+        "token": "Your discord bot token here",
+        "playinggame": "Translating"
+    },
+    "models": {
+        "EngTyping2Zh_Transformer_PTTTraining50.keras": {
+        "vocabulary_size": 15000,
+            "sequence_length": 50
+        },
+        "EngTyping2Zh_Transformer_PTTTraining20.keras": {
+        "vocabulary_size": 15000,
+            "sequence_length": 50
+        },
+        "EngTyping2Zh_RNN_PTTTraining.keras": {
+            "vocabulary_size": 15000,
+            "sequence_length": 50
+        }
+    },
+    "split_char": "⫯"
+}
