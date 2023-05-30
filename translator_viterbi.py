@@ -76,7 +76,6 @@ if __name__ == "__main__":
     def example():
         return viterbi(observations, states, start_probability, transition_probability, emission_probability)
     while True:
-        _t = time.time()
         tmp = ''
         observations = []
         for c in list(engTyping_rearrange(engTyping_end_fix(input('?:')))):
@@ -93,6 +92,7 @@ if __name__ == "__main__":
             states.extend(hmm['engTyping2zh'][observation])
         if states == []:
             continue
+        _t = time.time()
         print(example())
         print(observations)
         print(f'total time: {time.time() - _t}')
