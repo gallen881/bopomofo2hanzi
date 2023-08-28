@@ -1,8 +1,8 @@
 import json
 import time
-from utils import engTyping_end_fix, engTyping_rearrange
+from utils import engTyping_end_fix, engTyping_rearrange, punctuations
 
-with open('models/engTyping2Zh_HMM100.json', encoding='utf-8') as file:
+with open('models/PTT_2023_08_06_engTyping2Zh_HMM70_Fri_Aug_25_164054_2023.json', encoding='utf-8') as file:
     hmm = json.load(file)
 start_probability = hmm['start_probability']
 transition_probability = hmm['transition_probability']
@@ -58,41 +58,24 @@ def decode_sentence(text: str):
     observations = []
     for c in list(engTyping_rearrange(engTyping_end_fix(text))):
         tmp += c
-        if c in ' 6347':
+        if c in ' 6347' + punctuations:
             observations.append(tmp)
             tmp = ''
     states = []
     for observation in observations:
         if observation not in hmm['engTyping2zh'].keys():
             print(f'Unknown word: {observation}')
-            states = []
-            break
-        states.extend(hmm['engTyping2zh'][observation])
+            # states = []
+            # break
+        else:
+            states.extend(hmm['engTyping2zh'][observation])
     if states == []:
-        return
+        return (0, [''])
     return viterbi(observations, states, start_probability, transition_probability, emission_probability)
 
 if __name__ == "__main__":
-    def example():
-        return viterbi(observations, states, start_probability, transition_probability, emission_probability)
     while True:
-        tmp = ''
-        observations = []
-        for c in list(engTyping_rearrange(engTyping_end_fix(input('?:')))):
-            tmp += c
-            if c in ' 6347':
-                observations.append(tmp)
-                tmp = ''
-        states = []
-        for observation in observations:
-            if observation not in hmm['engTyping2zh'].keys():
-                print(f'Unknown word: {observation}')
-                states = []
-                break
-            states.extend(hmm['engTyping2zh'][observation])
-        if states == []:
-            continue
+        text = input('?:')
         _t = time.time()
-        print(example())
-        print(observations)
+        print(decode_sentence(text))
         print(f'total time: {time.time() - _t}')

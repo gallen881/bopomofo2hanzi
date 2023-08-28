@@ -1,13 +1,26 @@
-from utils import get_data, bopomofo2engTyping, zh2bopomofo, del_punctuations
+# from utils import get_data, bopomofo2engTyping, zh2bopomofo, del_symbols
 import json
 import time
 
 
-print('Loading data...')
-lines = get_data('PTT')
-print('Preprocessing data...')
-engt = [[bopomofo2engTyping(char) for char in zh2bopomofo(line)] for line in lines]
-zh = [[char for char in del_punctuations(line)] for line in lines]
+# print('Loading data...')
+# lines = get_data('PTT', 100)
+# print('Preprocessing data...')
+# engt = [[bopomofo2engTyping(char) for char in zh2bopomofo(line)] for line in lines]
+# zh = [[char for char in del_symbols(line)] for line in lines]
+
+datasets_name = 'PTT_2023_08_06'
+model_name = f'{datasets_name}_engTyping2Zh_HMM70_{time.ctime().replace(" ", "_").replace(":", "")}.json'
+split_char = '⫯'
+
+engTyping_inserted_lines = open(f'datasets/{datasets_name}_engTyping_inserted_lines.txt', 'r', encoding='utf-8').readlines()
+zh_lines = open(f'datasets/{datasets_name}_zh_lines.txt', 'r', encoding='utf-8').readlines()
+lines_len = len(engTyping_inserted_lines)
+engt = [line.replace('\n', '').split(split_char) for line in engTyping_inserted_lines][:int(lines_len * 0.7)]
+zh = [line.replace('\n', '').split(split_char)[1:-1] for line in zh_lines][:int(lines_len * 0.7)]
+
+
+
 
 start_probability = {}
 transition_probability = {}
@@ -58,6 +71,6 @@ transition_probability = tpep_calculation(transition_probability)
 emission_probability = tpep_calculation(emission_probability)
 
 
-print('Saving model...')
 print(f'Time used: {time.time() - t} seconds')
-json.dump({'start_probability': start_probability, 'transition_probability': transition_probability, 'emission_probability': emission_probability, 'engTyping2zh': engTyping2zh}, open('models/engTyping2Zh_HMM100.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=4)
+print('Saving model...')
+json.dump({'start_probability': start_probability, 'transition_probability': transition_probability, 'emission_probability': emission_probability, 'engTyping2zh': engTyping2zh}, open(f'models/{model_name}', 'w', encoding='utf-8'), ensure_ascii=False, indent=4)

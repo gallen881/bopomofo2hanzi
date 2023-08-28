@@ -1,5 +1,7 @@
 tensorflow==2.10.0
 numpy
+sacrebleu
+OpenCC
 pypinyin==0.49.0
 discord.py==2.0.1
 colorama

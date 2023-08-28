@@ -1,20 +1,38 @@
 trash
 __pycache__
+說明書
+封存
+PTT_2023_08_06_5length_test_dataset.tfrecord
 phrases_dict.json
 processed.txt
 example_sentence.txt
 config.json
+engTyping2Zh_HMM70.json
+engTyping2Zh_HMM100.json
+mT5_small_PTT_2023_08_06_Thu_Aug_17_081645_2023.ckpt
+BERT_ELF_malware_identify.ipynb
+dataset_classifier.py
+length_len_dataset.py
+note.md
+.gitignore
+PTT_2023_08_06_engTyping_inserted_lines.txt
+PTT_2023_08_06_zh_lines.txt
 
 *logs*
 .vscode
 build
 dist
+*.tfrecord
+*.rar
 *.keras
 *.pkl
 *.spec
 *logs*
 *.png
-*test*
+test*
+*PTT_2023_08_03*
+*.yaml
+*wiki*
 
 
 train_RNN2.py
@@ -24,3 +42,5 @@ plot_model.py
 
 data_process.py
 func.py
+
+num2hanzi.js

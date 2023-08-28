@@ -4,13 +4,14 @@ import tensorflow as tf
 import numpy as np
 import json
 
-model_name = 'EngTyping2Zh_Transformer_PTTTraining20.keras'
+model_name = 'Transformer_PTT_2023_08_06_VS20000_SL20_Tue_Aug__8_022809_2023.keras'
 config = json.load(open('config.json', encoding='utf8'))
-split_char = config['split_char']
-max_decoded_sentence_length = config['models'][model_name]['sequence_length']
+split_char = '⫯'
+max_decoded_sentence_length = 20
 
-source_vectorization = load_text_vectorization(f"models/{model_name[:-6]}_source_vectorization.pkl")
-target_vectorization = load_text_vectorization(f"models/{model_name[:-6]}_target_vectorization.pkl")
+tv_name = 'PTT_2023_08_06'
+source_vectorization = load_text_vectorization(f"models/{tv_name}_source_vectorization.pkl")
+target_vectorization = load_text_vectorization(f"models/{tv_name}_target_vectorization.pkl")
 
 zh_vocab = target_vectorization.get_vocabulary()
 zh_index_lookup = dict(zip(range(len(zh_vocab)), zh_vocab))
