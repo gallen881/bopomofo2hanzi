@@ -4,7 +4,7 @@ import pickle
 bleu = BLEU()
 split_char = '⫯'
 datasets_name = 'PTT_2023_08_06'
-with open('datasets/translator_google_lines.pkl', 'rb') as file:
+with open('datasets/translator_google_new_lines.pkl', 'rb') as file:
     translator_google_lines = pickle.load(file)
 lines_len = len(translator_google_lines)
 

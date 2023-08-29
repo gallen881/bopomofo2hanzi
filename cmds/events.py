@@ -11,7 +11,7 @@ class Events(Cog_Extension):
     async def on_message(self, message: discord.Message):
         texts = []
         text = engTyping_end_fix(message.content.lower())
-        text_list = text_classifier(text)
+        text_list = text_classifier(text) if len(text) >= 4 else ['']
         if IsZhInputs(text):
             texts = [engTyping_rearrange(text)]
         elif text_list[0]:

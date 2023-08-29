@@ -2,7 +2,7 @@ import pickle
 from sacrebleu import BLEU
 bleu = BLEU()
 
-with open('translator_google_lines.pkl', 'rb') as file:
+with open('datasets/translator_google_lines.pkl', 'rb') as file:
     engTyping_lines = pickle.load(file)
 engTyping_lines = [' '.join(list(line)) for line in engTyping_lines]
 
