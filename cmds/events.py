@@ -10,10 +10,10 @@ class Events(Cog_Extension):
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
         texts = []
-        text = engTyping_end_fix(engTyping_rearrange(message.content.lower()))
+        text = engTyping_end_fix(message.content.lower())
         text_list = text_classifier(text)
         if IsZhInputs(text):
-            texts = [text]
+            texts = [engTyping_rearrange(text)]
         elif text_list[0]:
             texts = text_list
         if texts:

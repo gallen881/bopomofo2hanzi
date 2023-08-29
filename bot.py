@@ -12,7 +12,7 @@ async def main():
     @bot.event
     async def on_ready():
         function.print_detail(memo='INFO', obj='Bot is Ready')
-        await bot.change_presence(status=discord.Status.online, activity=discord.Game(function.open_json('./data/config.json')['playinggame']))
+        await bot.change_presence(status=discord.Status.online, activity=discord.Game(function.open_json('config.json')['bot']['playinggame']))
 
     @bot.command()
     @commands.is_owner()
