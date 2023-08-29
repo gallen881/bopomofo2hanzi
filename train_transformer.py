@@ -21,7 +21,6 @@ if __name__ == '__main__':
     encoder_inputs = tf.keras.Input(shape=(None,), dtype="int64", name="engTyping")
     x = PositionalEmbedding(SEQUENCE_LENGTH, VOCABULARY_SIZE, embed_dim)(encoder_inputs)
     encoder_outputs = TransformerEncoder(embed_dim, dense_dim, num_heads)(x)
-    encoder_outputs = TransformerEncoder(embed_dim, dense_dim, num_heads)(encoder_outputs)
 
     decoder_inputs = tf.keras.Input(shape=(None,), dtype="int64", name="zh")
     x = PositionalEmbedding(SEQUENCE_LENGTH, VOCABULARY_SIZE, embed_dim)(decoder_inputs)
