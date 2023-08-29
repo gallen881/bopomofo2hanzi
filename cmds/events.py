@@ -16,7 +16,7 @@ class Events(Cog_Extension):
             texts = [text]
         elif text_list[0]:
             texts = text_list
-        if not texts:
+        if texts:
             output = []
             for text in texts:
                 function.print_detail('INFO', message.author, message.guild, message.channel, f'Get message: {text}')
