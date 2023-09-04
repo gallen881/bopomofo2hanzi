@@ -20,6 +20,9 @@
 > RNN 以及 LSTM 模型共用 `translator_RNN.py`，修改 `model` 值即可  
 > mT5 模型相關檔案為 Jupyter Notebook
 
+### Online translator
+https://gallen881.github.io/bopomofo2hanzi/
+
 ## Datasets
 TED: https://www.kaggle.com/datasets/wahabjawed/text-dataset-for-63-langauges  
 PTT: https://github.com/zake7749/Gossiping-Chinese-Corpus
