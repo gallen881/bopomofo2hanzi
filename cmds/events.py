@@ -16,7 +16,7 @@ class Events(Cog_Extension):
         text_list = text_classifier(text) if len(text) >= 4 else ['']
         if IsZhInputs(text):
             texts = [engTyping_rearrange(text)]
-        elif len(max([engTyping_insert_split_char(part).split(split_char) for part in text_list], key=len)) >= 2:
+        elif len(max([engTyping_insert_split_char(part, split_char).split(split_char) for part in text_list], key=len)) >= 2:
             texts = text_list
         if texts:
             output = []

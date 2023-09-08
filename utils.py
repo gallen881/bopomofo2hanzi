@@ -135,27 +135,27 @@ def IsZhInput(words):
 
 def IsZhInputs(words: str) -> int:
     if len(words) >= 8:
-        if IsZhInput(words[-4:]) and IsZhInput(words[-8:-4]):
+        if (IsZhInput(words[-4:]) or words[-1] in punctuations) and IsZhInput(words[-8:-4]):
             return 8
     if len(words) >= 7:
-        if IsZhInput(words[-3:]) and IsZhInput(words[-7:-3]):
+        if (IsZhInput(words[-3:]) or words[-1] in punctuations) and IsZhInput(words[-7:-3]):
             return 7
-        elif IsZhInput(words[-4:]) and IsZhInput(words[-7:-4]):
+        elif (IsZhInput(words[-4:]) or words[-1] in punctuations) and IsZhInput(words[-7:-4]):
             return 7
     if len(words) >= 6:
-        if IsZhInput(words[-2:]) and IsZhInput(words[-6:-2]):
+        if (IsZhInput(words[-2:]) or words[-1] in punctuations) and IsZhInput(words[-6:-2]):
             return 6
-        elif IsZhInput(words[-3:]) and IsZhInput(words[-6:-3]):
+        elif (IsZhInput(words[-3:]) or words[-1] in punctuations) and IsZhInput(words[-6:-3]):
             return 6
-        elif IsZhInput(words[-4:]) and IsZhInput(words[-6:-4]):
+        elif (IsZhInput(words[-4:]) or words[-1] in punctuations) and IsZhInput(words[-6:-4]):
             return 6
     if len(words) >= 5:
-        if IsZhInput(words[-2:]) and IsZhInput(words[-5:-2]):
+        if (IsZhInput(words[-2:]) or words[-1] in punctuations) and IsZhInput(words[-5:-2]):
             return 5
-        elif IsZhInput(words[-3:]) and IsZhInput(words[-5:-3]):
+        elif (IsZhInput(words[-3:]) or words[-1] in punctuations) and IsZhInput(words[-5:-3]):
             return 5
     if len(words) >= 4:
-        if IsZhInput(words[-2:]) and IsZhInput(words[-4:-2]):
+        if (IsZhInput(words[-2:]) or words[-1] in punctuations) and IsZhInput(words[-4:-2]):
             return 4
     return 0
 
