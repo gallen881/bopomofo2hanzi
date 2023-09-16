@@ -16,13 +16,14 @@ class Events(Cog_Extension):
         text_list = text_classifier(text) if len(text) >= 4 else ['']
         if IsZhInputs(text):
             texts = [engTyping_rearrange(text)]
-        elif len(max([engTyping_insert_split_char(part, split_char).split(split_char) for part in text_list], key=len)) >= 2:
+        elif len(max([engTyping_insert_split_char(part).split(split_char) for part in text_list], key=len)) >= 2:
             texts = text_list
         if texts:
             output = []
             for text in texts:
                 function.print_detail('INFO', message.author, message.guild, message.channel, f'Get message: {text}')
-                output.append(''.join(translator_viterbi.decode_sentence(text)[1]))
+                r = translator_viterbi.decode_sentence(text)
+                if r[0] > 0: output.append(''.join(r[1]))
             translated_msg = ' '.join(output)
             await message.reply(translated_msg)
             function.print_detail('INFO', message.author, message.guild, message.channel, f'Send message: {translated_msg}')
