@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css"></link>
+    <title>注音輸入法轉漢字翻譯器</title>
+</head>
+
+<body>
+    <div class="form__group field"> <!-- https://codepen.io/lucasyem/pen/ZEEYKdj -->
+        <input type="input" class="engTyping_input_text" placeholder="輸入注音輸入法之錯字" name="name" id='engTyping_input_text' required />
+        <label for="engTyping_input_text" class="engTyping_input_text_label">輸入注音輸入法之錯字</label>
+    </div>
+    <!-- <input type="text" id="engTyping_input_text"> -->
+    <!-- <button id="engTyping2zh_button">Translate</button> -->
+    <!-- https://getcssscan.com/css-buttons-examples button 50 -->
+    <br>
+    <button class="engTyping2zh_button" role="button" id="engTyping2zh_button">Translate</button>
+    <p id="translated_text" style="color:gainsboro;"></p>
+    <script type="text/javascript" src="./models/PTT_2023_08_06_engTyping2Zh_HMM100_Mon_Aug__7_201541_2023_for_js.js"></script>
+    <script src="translator_viterbi.js"></script>
+</body>
+
+</html>

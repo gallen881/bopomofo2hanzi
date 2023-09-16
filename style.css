@@ -1,0 +1,134 @@
+.form__group {
+  position: relative;
+  padding: 15px 0 0;
+  margin-top: 10px;
+  width: 50%;
+}
+
+.engTyping_input_text {
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid #9b9b9b;
+  outline: 0;
+  font-size: 1.3rem;
+  color: #fff;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+}
+.engTyping_input_text::-moz-placeholder {
+  color: transparent;
+}
+.engTyping_input_text::placeholder {
+  color: transparent;
+}
+.engTyping_input_text:-moz-placeholder-shown ~ .engTyping_input_text_label {
+  font-size: 1.3rem;
+  cursor: text;
+  top: 20px;
+}
+.engTyping_input_text:placeholder-shown ~ .engTyping_input_text_label {
+  font-size: 1.3rem;
+  cursor: text;
+  top: 20px;
+}
+
+.engTyping_input_text_label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: #9b9b9b;
+}
+
+.engTyping_input_text:focus {
+  padding-bottom: 6px;
+  font-weight: 700;
+  border-width: 3px;
+  -o-border-image: linear-gradient(to right, #11998e, #38ef7d);
+     border-image: linear-gradient(to right, #11998e, #38ef7d);
+  border-image-slice: 1;
+}
+.engTyping_input_text:focus ~ .engTyping_input_text_label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: #11998e;
+  font-weight: 700;
+}
+
+/* reset input */
+.engTyping_input_text:required, .engTyping_input_text:invalid {
+  box-shadow: none;
+}
+
+/* demo */
+body {
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-size: 1.5rem;
+  background-color: #222222;
+}
+
+/* add */
+.engTyping2zh_button { /* https://getcssscan.com/css-buttons-examples button 50 */
+  -webkit-appearance: button;
+     -moz-appearance: button;
+          appearance: button;
+  background-color: #000;
+  background-image: none;
+  border: 1px solid #000;
+  border-radius: 4px;
+  box-shadow: #fff 4px 4px 0 0, #000 4px 4px 0 1px;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: ITCAvantGardeStd-Bk, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  margin: 0 5px 10px 0;
+  overflow: visible;
+  padding: 12px 40px;
+  text-align: center;
+  text-transform: none;
+  touch-action: manipulation;
+  -moz-user-select: none;
+       user-select: none;
+  -webkit-user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.engTyping2zh_button:focus {
+  text-decoration: none;
+}
+
+.engTyping2zh_button:hover {
+  text-decoration: none;
+}
+
+.engTyping2zh_button:active {
+  box-shadow: rgba(0, 0, 0, 0.125) 0 3px 5px inset;
+  outline: 0;
+}
+
+.engTyping2zh_button:not([disabled]):active {
+  box-shadow: #fff 2px 2px 0 0, #000 2px 2px 0 1px;
+  transform: translate(2px, 2px);
+}
+
+@media (min-width: 768px) {
+  .engTyping2zh_button {
+    padding: 12px 50px;
+  }
+}/*# sourceMappingURL=style.css.map */
