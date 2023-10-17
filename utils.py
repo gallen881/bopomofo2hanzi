@@ -422,7 +422,7 @@ def get_datasets_and_tv(
         print('Data preprocessed.')
         tv_save_names = [f"models/{name}_source_vectorization.pkl", f"models/{name}_target_vectorization.pkl"] if save_tv else []
         source_vectorization, target_vectorization = get_text_vectorization(train_pairs, vocabulary_size, sequence_length, tv_save_names)
-        dataset_names = [f"datasets/{name}_train_dataset.tfrecords", f"datasets/{name}_val_dataset.tfrecords", f"datasets/{name}_test_dataset.tfrecords"] if save_datasets else []
+        dataset_names = [f"datasets/{name}_train_dataset.tfrecord", f"datasets/{name}_val_dataset.tfrecord", f"datasets/{name}_test_dataset.tfrecord"] if save_datasets else []
         train_dataset, val_dataset, test_dataset = get_datasets((source_vectorization, target_vectorization), train_pairs, val_pairs, test_pairs, dataset_names)
         print('Time used:', time.time() - t)
     return train_dataset, val_dataset, test_dataset, source_vectorization, target_vectorization
