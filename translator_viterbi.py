@@ -2,7 +2,7 @@ import json
 import time
 from utils import engTyping_end_fix, engTyping_rearrange, punctuations
 
-with open('models/PTT_2023_08_06_engTyping2Zh_HMM70_Fri_Aug_25_164054_2023.json', encoding='utf-8') as file:
+with open('models/CWIKI_2023_09_27_engTyping2Zh_HMM100_Thu_Sep_28_061004_2023.json', encoding='utf-8') as file:
     hmm = json.load(file)
 start_probability = hmm['start_probability']
 transition_probability = hmm['transition_probability']
@@ -15,7 +15,7 @@ def viterbi(obs, states, start_p, trans_p, emit_p):
     path = {}  # 存儲每個狀態的最佳路徑
 
     # 初始化
-    for i, st in enumerate(states):
+    for i, st in enumerate(states[0]):
         V[0][st] = start_p.get(st, default) * emit_p.get(st, {}).get(obs[0], default)  # 初始時間步的概率為起始概率乘以發射概率
         path[st] = [st]  # 每個狀態作為自己的最佳路徑的起點
 
@@ -24,9 +24,9 @@ def viterbi(obs, states, start_p, trans_p, emit_p):
         V.append({})
         newpath = {}
 
-        for curr_st in states:
+        for curr_st in states[t]:
             paths_to_curr_st = []
-            for prev_st in states:
+            for prev_st in states[t - 1]:
                 # 計算到達當前狀態的所有路徑的概率
                 paths_to_curr_st.append((V[t-1].get(prev_st, default) * trans_p.get(prev_st, {}).get(curr_st, default) * emit_p.get(curr_st, {}).get(obs[t], default), prev_st))
             curr_prob, prev_state = max(paths_to_curr_st)  # 選擇概率最大的路徑
@@ -40,7 +40,7 @@ def viterbi(obs, states, start_p, trans_p, emit_p):
     #     print(line)
 
     # 找到最後一個時間步概率最大的狀態和對應的最佳路徑
-    prob, end_state = max([(V[-1][st], st) for st in states])
+    prob, end_state = max([(V[-1][st], st) for st in states[-1]])
     return prob, path[end_state]
 
 
@@ -61,14 +61,14 @@ def decode_sentence(text: str):
         if c in ' 6347' + punctuations:
             observations.append(tmp)
             tmp = ''
-    states = []
-    for observation in observations:
+    states = [''] * len(observations)
+    for i, observation in enumerate(observations):
         if observation not in hmm['engTyping2zh'].keys():
             print(f'Unknown word: {observation}')
             # states = []
             # break
         else:
-            states.extend(hmm['engTyping2zh'][observation])
+            states[i] = hmm['engTyping2zh'][observation]
     if states == []:
         return (0, [''])
     return viterbi(observations, states, start_probability, transition_probability, emission_probability)

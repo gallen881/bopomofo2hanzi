@@ -2,7 +2,7 @@ import json
 from sacrebleu import BLEU
 
 # with open('models/PTT_2023_08_06_engTyping2Zh_HMM100_Mon_Aug__7_231753_2023.json', encoding='utf-8') as file:
-with open('models/PTT_2023_08_06_engTyping2Zh_HMM70_Fri_Aug_25_164054_2023.json', encoding='utf-8') as file:
+with open('models/WIKI_2023_09_24_engTyping2Zh_HMM100_Tue_Sep_26_032109_2023.json', encoding='utf-8') as file:
     hmm = json.load(file)
 start_probability = hmm['start_probability']
 transition_probability = hmm['transition_probability']
@@ -58,7 +58,7 @@ def decode_sentence(text: str):
 
 bleu = BLEU()
 split_char = '⫯'
-datasets_name = 'PTT_2023_08_06'
+datasets_name = 'WIKI_2023_09_24'
 with open(f'datasets/{datasets_name}_engTyping_inserted_lines.txt', 'r', encoding='utf-8') as file:
     engTyping_inserted_lines = file.readlines()
 lines_len = len(engTyping_inserted_lines)

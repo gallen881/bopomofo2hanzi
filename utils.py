@@ -48,6 +48,13 @@ def bopomofo2engTyping(sentence: str) -> str:
 def is_hanzi(char: str) -> bool:
     return '\u4e00' <= char and char <= '\u9fa5'
 
+def is_punctuations(chars: str) -> bool:
+    state = True
+    for char in chars:
+        state = state and (char in punctuations)
+        if not state: break
+    return state
+
 def del_symbols(text: str) -> str:
     output = ''
     for char in text:
@@ -165,6 +172,9 @@ def get_data(data: str, amount=0) -> list:
     '''
     if data == 'TED': path = './datasets/Chinese Traditional.txt'
     elif data == 'PTT': path = './datasets/PTT.txt'
+    elif data == 'CPTT': path = './datasets/PTT_clean.txt'
+    elif data == 'WIKI': path = './datasets/wiki.txt'
+    elif data == 'CWIKI': path = './datasets/wiki_clean.txt'
     else: path = data
     lines = open(path, encoding='utf-8').read().split('\n')
     return lines[:amount] if amount else lines
@@ -172,8 +182,12 @@ def get_data(data: str, amount=0) -> list:
 def zh2bopomofo(zh) -> list:
     output = []
     for pinyin in lazy_pinyin(zh, Style.BOPOMOFO):
-        if pinyin[-1] not in 'ˉˊˇˋ˙' + punctuations: pinyin += 'ˉ'
-        output.append(pinyin)
+        if is_punctuations(pinyin):
+            for punc in pinyin:
+                output.append(punc)
+        else:
+            if pinyin[-1] not in 'ˉˊˇˋ˙' + punctuations: pinyin += 'ˉ'
+            output.append(pinyin)
     return output
 
 def num2hanzi(num: str) -> str:
@@ -368,7 +382,7 @@ def get_datasets_and_tv(
             for process in process_list:
                 p += process[0] + '\n'
                 new_total_p += process[1]
-            p += f'ETA: {time.strftime("%H:%M:%S", time.gmtime(int(round((lines_length - new_total_p) / (new_total_p - total_p) * 0.5, 0))))}\n'
+            p += f'ETA: {time.strftime("%H:%M:%S", time.gmtime(int(round((lines_length - new_total_p) / (new_total_p - total_p if new_total_p - total_p else 1) * 0.5, 0))))}\n'
             p += f'Total: {new_total_p}/{lines_length}\n'
             p += f'Deleted lines: {deleted_line_count}\n'
             p += f'Errors: {len(errors)}\n'

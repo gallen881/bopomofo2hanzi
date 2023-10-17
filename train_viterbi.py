@@ -9,15 +9,15 @@ import time
 # engt = [[bopomofo2engTyping(char) for char in zh2bopomofo(line)] for line in lines]
 # zh = [[char for char in del_symbols(line)] for line in lines]
 
-datasets_name = 'PTT_2023_08_06'
-model_name = f'{datasets_name}_engTyping2Zh_HMM70_{time.ctime().replace(" ", "_").replace(":", "")}.json'
+datasets_name = 'CWIKI_2023_09_27'
+model_name = f'{datasets_name}_engTyping2Zh_HMM100_{time.ctime().replace(" ", "_").replace(":", "")}.json'
 split_char = '⫯'
 
 engTyping_inserted_lines = open(f'datasets/{datasets_name}_engTyping_inserted_lines.txt', 'r', encoding='utf-8').readlines()
 zh_lines = open(f'datasets/{datasets_name}_zh_lines.txt', 'r', encoding='utf-8').readlines()
 lines_len = len(engTyping_inserted_lines)
-engt = [line.replace('\n', '').split(split_char) for line in engTyping_inserted_lines][:int(lines_len * 0.7)]
-zh = [line.replace('\n', '').split(split_char)[1:-1] for line in zh_lines][:int(lines_len * 0.7)]
+# engt = [line.replace('\n', '').split(split_char) for line in engTyping_inserted_lines]
+# zh = [line.replace('\n', '').split(split_char)[1:-1] for line in zh_lines]
 
 
 
@@ -28,7 +28,9 @@ emission_probability = {}
 engTyping2zh = {}
 print('Calculating probability part 1...')
 t = time.time()
-for engt_line, zh_line in zip(engt, zh):
+for engt_line, zh_line in zip(engTyping_inserted_lines, zh_lines):
+    engt_line = engt_line.replace('\n', '').split(split_char)
+    zh_line = zh_line.replace('\n', '').split(split_char)[1:-1]
     # print(engt_line, zh_line)
     if zh_line == []: continue
     start_probability[zh_line[0]] = start_probability.get(zh_line[0], 0) + 1
