@@ -3,7 +3,7 @@ import tensorflow as tf
 from utils import get_datasets_and_tv
 
 dataset_and_tv_name = 'PTT_2023_08_06'
-model_name = f'GRU_{dataset_and_tv_name}_VS20000_SL20_{time.ctime().replace(" ", "_").replace(":", "")}.keras'
+model_name = f'BiGRU_{dataset_and_tv_name}_VS20000_SL20_{time.ctime().replace(" ", "_").replace(":", "")}.keras'
 split_char = '⫯'
 VOCABULARY_SIZE = 20000
 SEQUENCE_LENGTH = 20
@@ -16,7 +16,7 @@ if __name__ == '__main__':
 
     source = tf.keras.Input(shape=(None,), dtype="int64", name="engTyping")
     x = tf.keras.layers.Embedding(VOCABULARY_SIZE, embed_dim, mask_zero=True)(source)
-    encoded_source = tf.keras.layers.GRU(latent_dim)(x)
+    encoded_source = tf.keras.layers.Bidirectional(tf.keras.layers.GRU(latent_dim), merge_mode="sum")(x)
 
     past_target = tf.keras.Input(shape=(None,), dtype="int64", name="zh")
     x = tf.keras.layers.Embedding(VOCABULARY_SIZE, embed_dim, mask_zero=True)(past_target)
