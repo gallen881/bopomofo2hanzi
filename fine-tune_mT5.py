@@ -32,7 +32,7 @@ prefix = "translate engTyping to Traditional Chinese:".split()
 
 # ---
 
-strategy = tf.distribute.MirroredStrategy()
+strategy = tf.distribute.experimental.MultiWorkerMirroredStrategy()
 with strategy.scope():
     model = TFAutoModelForSeq2SeqLM.from_pretrained('models/mT5_pretrained_model')
     optimizer = AdamWeightDecay(learning_rate=2e-5, weight_decay_rate=0.01)
