@@ -32,7 +32,11 @@ prefix = "translate engTyping to Traditional Chinese:".split()
 
 # ---
 
-model = TFAutoModelForSeq2SeqLM.from_pretrained('models/mT5_pretrained_model')
+strategy = tf.distribute.MirroredStrategy()
+with strategy.scope():
+    model = TFAutoModelForSeq2SeqLM.from_pretrained('models/mT5_pretrained_model')
+    optimizer = AdamWeightDecay(learning_rate=2e-5, weight_decay_rate=0.01)
+    model.compile(optimizer=optimizer, metrics=["accuracy"])  # No loss argument!
 
 # ---
 
@@ -40,7 +44,6 @@ model = TFAutoModelForSeq2SeqLM.from_pretrained('models/mT5_pretrained_model')
 
 # ---
 
-optimizer = AdamWeightDecay(learning_rate=2e-5, weight_decay_rate=0.01)
 
 # ---
 
@@ -117,7 +120,6 @@ tf_test_set = tf.data.Dataset.load(f'datasets/mT5_{data_name}_tf_test_dataset.tf
 
 # ---
 
-model.compile(optimizer=optimizer, metrics=["accuracy"])  # No loss argument!
 
 # metric_callback = KerasMetricCallback(metric_fn=compute_metrics, eval_dataset=tf_val_set)
 
