@@ -114,6 +114,12 @@ tf_train_set = tf.data.Dataset.load(f'datasets/mT5_{data_name}_tf_train_dataset.
 tf_val_set = tf.data.Dataset.load(f'datasets/mT5_{data_name}_tf_val_dataset.tfrecord')
 tf_test_set = tf.data.Dataset.load(f'datasets/mT5_{data_name}_tf_test_dataset.tfrecord')
 
+options = tf.data.Options()
+options.experimental_distribute.auto_shard_policy = tf.data.experimental.AutoShardPolicy.DATA
+tf_train_set = tf_train_set.with_options(options)
+tf_val_set = tf_val_set.with_options(options)
+tf_test_set = tf_test_set.with_options(options)
+
 # ---
 
 # tf.config.run_functions_eagerly(True)
