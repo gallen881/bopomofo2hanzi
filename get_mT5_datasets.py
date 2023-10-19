@@ -8,7 +8,7 @@ data_name = 'CWIKI_2023_09_27'
 checkpoint = "google/mt5-small"
 prefix = "translate engTyping to Traditional Chinese:".split()
 
-tokenizer = AutoTokenizer.from_pretrained(checkpoint)
+tokenizer = AutoTokenizer.from_pretrained('models/mT5_pretrained_tokenizer')
 
 with open(f'datasets/{data_name}_engTyping_inserted_lines.txt', 'r', encoding='utf-8') as file:
     engTyping_inserted_lines = file.readlines()
@@ -36,7 +36,7 @@ train_dataset = datasets.Dataset.from_dict(train_lines)
 val_dataset = datasets.Dataset.from_dict(val_lines)
 test_dataset = datasets.Dataset.from_dict(test_lines)
 
-model = TFAutoModelForSeq2SeqLM.from_pretrained(checkpoint)
+model = TFAutoModelForSeq2SeqLM.from_pretrained('models/mT5_pretrained_model')
 
 data_collator = DataCollatorForSeq2Seq(tokenizer=tokenizer, model=checkpoint, return_tensors="tf")
 
