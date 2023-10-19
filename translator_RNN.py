@@ -2,11 +2,11 @@ from utils import load_text_vectorization, engTyping_insert_split_char, engTypin
 import tensorflow as tf
 import numpy as np
 
-model_name = 'LSTM_PTT_2023_08_06_VS20000_SL20_Fri_Aug_11_185708_2023.keras'
+model_name = 'BiGRU_CWIKI_2023_09_27_VS20000_SL20_Wed_Oct_18_003038_2023.keras'
 split_char = '⫯'
 max_decoded_sentence_length = 20
 
-tv_name = 'PTT_2023_08_06'
+tv_name = 'CWIKI_2023_09_27'
 source_vectorization = load_text_vectorization(f"models/{tv_name}_source_vectorization.pkl")
 target_vectorization = load_text_vectorization(f"models/{tv_name}_target_vectorization.pkl")
 
