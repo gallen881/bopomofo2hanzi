@@ -21,7 +21,7 @@ checkpoint = "google/mt5-small"
 
 # ---
 
-tokenizer = AutoTokenizer.from_pretrained(checkpoint)
+tokenizer = AutoTokenizer.from_pretrained('models/mT5_pretrained_tokenizer')
 
 # ---
 
@@ -32,7 +32,7 @@ prefix = "translate engTyping to Traditional Chinese:".split()
 
 # ---
 
-model = TFAutoModelForSeq2SeqLM.from_pretrained(checkpoint)
+model = TFAutoModelForSeq2SeqLM.from_pretrained('models/mT5_pretrained_model')
 
 # ---
 
@@ -113,7 +113,7 @@ tf_test_set = tf.data.Dataset.load(f'datasets/mT5_{data_name}_tf_test_dataset.tf
 
 # ---
 
-tf.config.run_functions_eagerly(True)
+# tf.config.run_functions_eagerly(True)
 
 # ---
 
