@@ -60,19 +60,19 @@ bleu = BLEU()
 split_char = '⫯'
 datasets_name = 'CWIKI20_2023_10_21'
 with open(f'datasets/{datasets_name}_engTyping_inserted_lines.txt', 'r', encoding='utf-8') as file:
-    engTyping_inserted_lines = file.readlines()
+    engTyping_inserted_lines = file.read().split('\n')
 lines_len = len(engTyping_inserted_lines)
 engTyping_inserted_lines = engTyping_inserted_lines[int(lines_len * 0.85):]
 with open(f'datasets/{datasets_name}_zh_lines.txt', 'r', encoding='utf-8') as file:
-    zh_lines = file.readlines()
+    zh_lines = file.read().split('\n')
 zh_lines = zh_lines[int(lines_len * 0.85):]
 assert len(engTyping_inserted_lines) == len(zh_lines)
 
 lines_len = len(engTyping_inserted_lines)
 pred_sentences = []
 for i in range(len(engTyping_inserted_lines)):
-    zh_lines[i] = zh_lines[i].replace('\n', '').replace(split_char, ' ')[8:-6]
-    pred_sentences.append(' '.join(decode_sentence(engTyping_inserted_lines[i].replace('\n', ''))[1]))
+    zh_lines[i] = zh_lines[i].replace(split_char, ' ')[8:-6]
+    pred_sentences.append(' '.join(decode_sentence(engTyping_inserted_lines[i])[1]))
     print(f'\r{i + 1}/{lines_len}', end='')
 
 result = bleu.corpus_score(pred_sentences, [zh_lines])
