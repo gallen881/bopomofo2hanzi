@@ -175,6 +175,7 @@ def get_data(data: str, amount=0) -> list:
     elif data == 'CPTT': path = './datasets/PTT_clean.txt'
     elif data == 'WIKI': path = './datasets/wiki.txt'
     elif data == 'CWIKI': path = './datasets/wiki_clean.txt'
+    elif data == 'CWIKI20': path = './datasets/wiki_clean_all20.txt'
     else: path = data
     lines = open(path, encoding='utf-8').read().split('\n')
     return lines[:amount] if amount else lines
