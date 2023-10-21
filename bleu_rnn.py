@@ -50,14 +50,15 @@ for k in range(loop_times + 1):
             decoded_sentences[j] += split_char + zh_index_lookup[np.argmax(predictions[j, i, :])]
     pred_sentences.extend(decoded_sentences)
     print(f'\r{k}/{loop_times}', end='', flush=True)
-
+    
+print()
 count = 0
 for i in range(len(pred_sentences)):
     pred_sentences[i] = pred_sentences[i][7:]
     if pred_sentences[i].endswith('[end]'): pred_sentences[i] = pred_sentences[i][:-5]
     pred_sentences[i] = pred_sentences[i].replace(split_char, ' ')
     count += 1
-    print(f'{count}/{eng_len}', end='\r')
+    print(f'{count}/{eng_len}', end='\r', flush=True)
 
 result = bleu.corpus_score(pred_sentences, [zh_lines])
 print(result)
