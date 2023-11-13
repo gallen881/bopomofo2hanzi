@@ -17,7 +17,7 @@
 ### Use model in terminal
 1. 確認模型已訓練好且位於正確的目錄下
 2. 依自身情況修改 `translator_XXX.py` 中 `model` 的值，並執行 `translator_XXX.py`
-> RNN 以及 LSTM 模型共用 `translator_RNN.py`，修改 `model` 值即可  
+> GRU 以及 LSTM 模型共用 `translator_RNN.py`，修改 `model` 值即可  
 > mT5 模型相關檔案為 Jupyter Notebook
 
 ### Online translator
