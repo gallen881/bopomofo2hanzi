@@ -4,12 +4,12 @@ import tensorflow as tf
 import numpy as np
 import json
 
-model_name = 'Transformer_PTT_2023_08_06_VS20000_SL20_Tue_Aug__8_022809_2023.keras'
+model_name = 'Transformer_CWIKI_2023_09_27_VS20000_SL20_H16_Wed_Oct_18_203502_2023.keras'
 config = json.load(open('config.json', encoding='utf8'))
 split_char = '⫯'
 max_decoded_sentence_length = 20
 
-tv_name = 'PTT_2023_08_06'
+tv_name = 'CWIKI_2023_09_27'
 source_vectorization = load_text_vectorization(f"models/{tv_name}_source_vectorization.pkl")
 target_vectorization = load_text_vectorization(f"models/{tv_name}_target_vectorization.pkl")
 
@@ -45,4 +45,6 @@ if __name__ == '__main__':
         if texts:
             texts = [engTyping_insert_split_char(engTyping_rearrange(engTyping_end_fix(line)), split_char) for line in texts]
         r = decode_sequence(texts)
-        print(' '.join([line.replace(split_char, '')[7:-5] for line in r]))
+        r = r[0].split(split_char)[1:]
+        print(''.join(r[:-1] if r[-1] == '[end]' else r))
+        # print(' '.join([line.replace(split_char, '')[7:-5] for line in r]))

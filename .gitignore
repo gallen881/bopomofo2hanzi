@@ -1,7 +1,7 @@
 trash
 __pycache__
 說明書
-封存
+封存*
 PTT_2023_08_06_5length_test_dataset.tfrecord
 phrases_dict.json
 processed.txt
@@ -44,6 +44,11 @@ evaluate_viterbi.py
 plot_model.py
 
 data_process.py
+dataset_length.py
+split_dataset_to_20.py
 func.py
 
 num2hanzi.js
+
+Interpretation_of_the_results.txt
+QA_radio.txt

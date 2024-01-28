@@ -10,17 +10,21 @@ import time
 # zh = [[char for char in del_symbols(line)] for line in lines]
 
 datasets_name = 'CWIKI_2023_09_27'
-model_name = f'{datasets_name}_engTyping2Zh_HMM100_{time.ctime().replace(" ", "_").replace(":", "")}.json'
+model_name = f'{datasets_name}_engTyping2Zh_HMM70_{time.ctime().replace(" ", "_").replace(":", "")}.json'
 split_char = '⫯'
 
-engTyping_inserted_lines = open(f'datasets/{datasets_name}_engTyping_inserted_lines.txt', 'r', encoding='utf-8').readlines()
-zh_lines = open(f'datasets/{datasets_name}_zh_lines.txt', 'r', encoding='utf-8').readlines()
+with open(f'datasets/{datasets_name}_engTyping_inserted_lines.txt', 'r', encoding='utf-8') as file:
+    engTyping_inserted_lines = file.read().split('\n')
+with open(f'datasets/{datasets_name}_zh_lines.txt', 'r', encoding='utf-8') as file:
+    zh_lines = file.read().split('\n')
 lines_len = len(engTyping_inserted_lines)
 # engt = [line.replace('\n', '').split(split_char) for line in engTyping_inserted_lines]
 # zh = [line.replace('\n', '').split(split_char)[1:-1] for line in zh_lines]
 
+engTyping_inserted_lines = engTyping_inserted_lines[:int(lines_len * 0.7)]
+zh_lines = zh_lines[:int(lines_len * 0.7)]
 
-
+assert len(engTyping_inserted_lines) == len(zh_lines)
 
 start_probability = {}
 transition_probability = {}
@@ -29,8 +33,8 @@ engTyping2zh = {}
 print('Calculating probability part 1...')
 t = time.time()
 for engt_line, zh_line in zip(engTyping_inserted_lines, zh_lines):
-    engt_line = engt_line.replace('\n', '').split(split_char)
-    zh_line = zh_line.replace('\n', '').split(split_char)[1:-1]
+    engt_line = engt_line.split(split_char)
+    zh_line = zh_line.split(split_char)[1:-1]
     # print(engt_line, zh_line)
     if zh_line == []: continue
     start_probability[zh_line[0]] = start_probability.get(zh_line[0], 0) + 1

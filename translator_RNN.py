@@ -2,7 +2,7 @@ from utils import load_text_vectorization, engTyping_insert_split_char, engTypin
 import tensorflow as tf
 import numpy as np
 
-model_name = 'BiGRU_CWIKI_2023_09_27_VS20000_SL20_Wed_Oct_18_003038_2023.keras'
+model_name = 'LSTM_CWIKI_2023_09_27_VS20000_SL20_Wed_Oct_18_202633_2023.keras'
 split_char = '⫯'
 max_decoded_sentence_length = 20
 
@@ -43,4 +43,6 @@ if __name__ == '__main__':
         if texts:
             texts = [engTyping_insert_split_char(engTyping_rearrange(engTyping_end_fix(line)), split_char) for line in texts]
         r = decode_sequence(texts)
-        print(' '.join([line.replace(split_char, '')[7:-5] for line in r]))
+        r = r[0].split(split_char)[1:]
+        print(''.join(r[:-1] if r[-1] == '[end]' else r))
+        # print(' '.join([line.replace(split_char, '')[7:-5] for line in r]))

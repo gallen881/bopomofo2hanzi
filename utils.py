@@ -173,6 +173,7 @@ def get_data(data: str, amount=0) -> list:
     if data == 'TED': path = './datasets/Chinese Traditional.txt'
     elif data == 'PTT': path = './datasets/PTT.txt'
     elif data == 'CPTT': path = './datasets/PTT_clean.txt'
+    elif data == 'CPTT20': path = './datasets/PTT_clean_all20.txt'
     elif data == 'WIKI': path = './datasets/wiki.txt'
     elif data == 'CWIKI': path = './datasets/wiki_clean.txt'
     elif data == 'CWIKI20': path = './datasets/wiki_clean_all20.txt'
