@@ -9,6 +9,7 @@ example_sentence.txt
 config.json
 engTyping2Zh_HMM70.json
 engTyping2Zh_HMM100.json
+PTT_pinyin_2024_01_30_pinyin2Zh_HMM100_Tue_Jan_30_225809_2024.json
 mT5_small_PTT_2023_08_06_Thu_Aug_17_081645_2023.ckpt
 BERT_ELF_malware_identify.ipynb
 dataset_classifier.py
@@ -40,6 +41,9 @@ test*
 
 train_RNN2.py
 train_transformer2.py
+train_viterbi2.py
+train_pinyin.py
+translator_viterbi2.py
 evaluate_viterbi.py
 plot_model.py
 

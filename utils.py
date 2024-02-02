@@ -455,3 +455,32 @@ def text_classifier(text: str):
 
     if not output or engTyping_tmp: output.append(engTyping_tmp)
     return output
+
+def text_classifier2(text: str):
+    output = []
+    index_6347 = []
+    last_index = 0
+    for i, char in enumerate(text):
+        if char in ' 6347':
+            index_6347.append(i)
+    for i in index_6347:
+        if i < 4:
+            for j in range(i):
+                print(text[j:i])
+                if IsZhInput(text[j:i+1]):
+                    output.append(text[j:i+1])
+                    last_index = i
+                    break
+        else:
+            for j in range(i - 4, i):
+                print(text[j:i])
+                if IsZhInput(text[j:i+1]):
+                    if j == last_index + 1:
+                        output[-1] += text[j:i+1]
+                    else:
+                        output.append(text[j:i+1])
+                    last_index = i
+                    break
+    return output
+
+
